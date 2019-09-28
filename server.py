@@ -11,8 +11,25 @@ videos = defaultdict(list)
 
 
 async def receive(websocket, path):
+    # Check if client disconnected remove associated record entries
+    try:
+        message = await websocket.recv()
+    except:
+        for n in users:
+            if users[n] == websocket:
+                videostoremove = list()
+                for o in videos:
+                    if n in videos[o]:
+                        videos[o].remove(n)
+                    if len((videos[o])) == 0:
+                        videostoremove += {o}
 
-    message = await websocket.recv()
+                for o in videostoremove:
+                    videos.pop(o)
+                users.pop(n)
+                break
+        return
+
     message = message.split(', ', 2)
     if len(message) == 1:
         print("to few arguments")
@@ -32,18 +49,11 @@ async def receive(websocket, path):
     users[uid] = websocket
     if uid not in videos[vid]:
         videos[vid].append(uid)
-    """
-    try:
-        videos[vid] = videos[vid] + {uid}
-    except:
-        videos[vid] = {uid}
-"""
 
     for n in videos[vid]:
         print (n)
         await users[n].send(sendmessage)
 
-    await websocket.send("successfully received " + sendmessage)
     await receive(websocket, path)
 
 start_server = websockets.serve(receive, "localhost", 8766)
