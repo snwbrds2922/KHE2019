@@ -31,6 +31,7 @@ async def receive(websocket, path):
         return
 
     message = message.split(', ', 2)
+    print("recieved message: ", message)
     if len(message) == 1:
         print("to few arguments")
         return
