@@ -1,0 +1,49 @@
+.live-chat {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 20em;
+  max-height: 20em;
+  border: 1px solid gray;
+}
+
+.live-sub-chat:empty {
+  display: none;
+}
+
+.livechat-sub .live-sub-mess, .live-sub-chat {
+  width: 100%;
+}
+
+.live-sub-button {
+  padding: .5em;
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  border-radius: .25rem;
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+.live-chat-accord {
+  background-color: #eee;
+  color: black;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  transition: 0.4s;
+}
+
+.active-live-chat, .live-chat-accord:hover {
+  background-color: lightgray;
+}
+
+.panel-live-chat {
+  background-color: white;
+  border: solid 1px lightgray;
+  padding: 1em;
+  display: none;
+  overflow: hidden;
+}
