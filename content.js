@@ -15,3 +15,4 @@ chat.innerHTML = `
   </div>
 </div>
 `;
+document.body.appendChild(chat);
