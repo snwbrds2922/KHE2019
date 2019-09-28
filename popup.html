@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html>
+	<link rel="stylesheet" href="./contrib/bootstrap.min.css">
+	<script src="./contrib/jquery-3.3.1.slim.min.js"></script>
+	<script src="./contrib/popper.min.js"></script>
+	<script src="./contrib/bootstrap.min.js"></script>
 	<head>
 		<style>
+			.live-chat {
+			  display: block;
+			  width: 20em;
+			  max-height: 20em;
+			}
+			.livechat-sub .live-sub-mess, .live-sub-chat {
+			  width: 100%;
+			}
+			.livechat-sub .live-sub-button, .livechat-sub .live-sub-mess, .live-sub-chat {
+			  display: block;
+			  margin-bottom: 1em;
+			}
+			.live-sub-chat:empty {
+			  display: none;
+			}
 		</style>
 	</head>
 	<body>
-		<p>Sign-in with</p>
-		<button>Blockstack</button>
+		<div class="live-chat" id="livechat-accord">
+		  <div class="card">
+			<div class="card-header" id="liveChat">
+			  <h5 class="mb-0">
+				<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#usersOnline" aria-expanded="false" aria-controls="usersOnline">
+				  Users Online (2)
+				</button>
+			  </h5>
+			</div>
+			<div id="usersOnline" class="collapse" aria-labelledby="liveChat" data-parent="#livechat-accord">
+			  <div class="card-body">
+				<input class="live-sub-chat" type="text">
+				<form class="livechat-sub">
+				   <input class="live-sub-mess" type="text" placeholder="Message">
+				   <input class="btn btn-primary live-sub-button" type="submit" value="Submit">
+				</form>
+			  </div>
+			</div>
+		  </div>
+		</div>
 	</body>
 </html>
