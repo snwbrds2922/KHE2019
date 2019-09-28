@@ -40,6 +40,17 @@
   background-color: lightgray;
 }
 
+.live-chat-accord:after {
+  content: '\02795';
+  font-size: .75em;
+  color: black;
+  float: right;
+}
+
+.active-live-chat:after {
+  content: "\2796";
+}
+
 .panel-live-chat {
   background-color: white;
   border: solid 1px lightgray;
