@@ -53,7 +53,7 @@ function finishNav() {
 					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + status + " the chat!</p>";
 				}
 				if (request.message) {
-					document.querySelector(".live-sub-chat").innerHTML += "<p>" + encodeURIComponent(request.message) + "</p>";
+					document.querySelector(".live-sub-chat").innerHTML += "<p>" + request.message + "</p>";
 				}
 		});
 
