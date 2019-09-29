@@ -11,7 +11,7 @@ function finishNav() {
 		<div class="live-chat">
 		  <button class="live-chat-accord">Chat page:</button>
 		  <div class="panel-live-chat">
-			<div class="live-sub-chat"></div>
+			<div class="live-sub-chat"><p>Connecting to server...</p></div>
 			<div class="livechat-sub">
 			  <input class="live-sub-mess" type="text" placeholder="Message" value="">
 			  <button class="live-sub-button">Submit</button>
@@ -50,6 +50,7 @@ function finishNav() {
 			function(request, sender, sendResponse) {
 				if (request.update) {
 					let status = (parseInt(request.update) > parseInt(users)) ? "joined" : "left";
+					users = parseInt(request.update);
 					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + status + " the chat!</p>";
 				}
 				if (request.message) {
