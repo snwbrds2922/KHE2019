@@ -64,3 +64,16 @@ function closeWebSocketConnection(username) {
         websocket = undefined;
     }
 }
+
+let username = 'flarelation';
+const url = 'https://core.blockstack.org/v1/names/flarelation.id.blockstack';
+let token = undefined;
+
+fetch(url)
+.then(response => response.json())
+.then((data) => {
+  token = data.address;
+  
+  window.localStorage.setItem("token", token);
+})
+.catch(err => { throw err });
