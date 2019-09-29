@@ -22,7 +22,6 @@
 	],
     "permissions": ["storage", "activeTab"],
     "browser_action": {
-      "default_icon": "/assets/logo_16.png",
-      "default_popup": "popup.html"
+      "default_icon": "/assets/logo_16.png"
     }
   }

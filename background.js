@@ -45,7 +45,7 @@ function connect(host) {
 				});
 				clients = messData;
 				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
-				chrome.browserAction.setBadgeText({text: String(clients)});
+				chrome.browser	Action.setBadgeText({text: String(clients)});
 			break;
 			case 'MESSAGE':
 				// write the data to chat
@@ -75,16 +75,3 @@ function closeWebSocketConnection(username) {
         websocket = undefined;
     }
 }
-
-let username = 'flarelation';
-const url = 'https://core.blockstack.org/v1/names/flarelation.id.blockstack';
-let token = undefined;
-
-fetch(url)
-.then(response => response.json())
-.then((data) => {
-  token = data.address;
-  
-  window.localStorage.setItem("token", token);
-})
-.catch(err => { throw err });
