@@ -5,12 +5,17 @@
 import asyncio
 import websockets
 from collections import defaultdict
-import random
+import random, signal, sys
 
 users = {}
 videos = defaultdict(list)
 
-file = open("server.log", "a")
+file = open('server.log', 'a+')
+
+def signal_handler(sig, frame):
+    print("exiting")
+    file.close()
+    sys.exit(0)
 
 async def receive(websocket, path):
     # Check if client disconnected remove associated record entries
@@ -30,10 +35,12 @@ async def receive(websocket, path):
 
                 for o in videostoremove:
                     videos.pop(o)
+                print(str(n) + " left")
                 users.pop(n)
                 break
         return
 
+    print("received message: " + message +'\n')
     file.write("received message: " + message +'\n')
     if len(message) < 2:
         file.write("received empty message\n")
@@ -46,6 +53,7 @@ async def receive(websocket, path):
             print("NOVID")
             await websocket.send("NO VIDID RECEIVED")
             file.write("RECEIVED CONNECT NO VID\n")
+            print("RECEIVED CONNECT NO VID\n")
             return
 
         uid = random.randint(1, 1000)
@@ -71,6 +79,7 @@ async def receive(websocket, path):
                         await users[o].send(str("MESSAGE:" + str(uid) + ':' + message[1]))
     else:
         file.write("invalid header\n")
+        print("invalid header\n")
         await websocket.send("INVALID HEADER")
 
     await receive(websocket, path)
@@ -79,6 +88,7 @@ async def receive(websocket, path):
 start_server = websockets.serve(receive, "157.245.135.82", 8766)
 #For local
 #start_server = websockets.serve(receive, "localhost", 8766)
-
+signal.signal(signal.SIGINT, signal_handler)
+signal.signal(signal.SIGTERM, signal_handler)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
