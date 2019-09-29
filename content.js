@@ -55,7 +55,8 @@ function finishNav() {
 					document.querySelector(".live-sub-chat").innerHTML += "<p>" + request.message + "</p>";
 				}
 				if (request) {
-					document.querySelector('.live-sub-chat').scrollTo(0, this.scrollHeight);
+					const chatContainer = document.querySelector('.live-sub-chat');
+					document.querySelector('.live-sub-chat').scrollTo(0, chatContainer.scrollHeight);
 				}
 		});
 
