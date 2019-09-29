@@ -17,3 +17,11 @@ if (v) {
 	`;
 	document.body.appendChild(chat);
 }
+
+var port = chrome.runtime.connect({name: "videoID"});
+port.postMessage({vid: v});
+port.onMessage.addListener(function(msg) {
+  if (msg.goit == v) {
+	  alert(v);
+  }
+});
