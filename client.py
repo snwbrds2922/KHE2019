@@ -15,10 +15,9 @@ def on_close(ws):
     print("### closed ###")
 
 def on_open(ws):
-    ws.send("client1, vid1, client 1 vid1message")
-    ws.send("client1, vid2, client 1 vid2message")
-    ws.send("client1, vid3, client 1 vid3message")
-
+    ws.send("CONNECT:VID1234")
+    ws.send("MESSAGE:hello world!")
+    ws.send("MESSAGE")
 
 
 if __name__ == "__main__":
