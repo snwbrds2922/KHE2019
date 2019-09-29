@@ -49,7 +49,7 @@ function finishNav() {
 		chrome.runtime.onMessage.addListener(
 			function(request, sender, sendResponse) {
 				if (request.update) {
-					let status = (request.update >= users) ? "joined" : "left";
+					let status = (parseInt(request.update) > parseInt(users)) ? "joined" : "left";
 					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + status + " the chat!</p>";
 				}
 				if (request.message) {

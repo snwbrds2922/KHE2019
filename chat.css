@@ -2,9 +2,16 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  width: 20em;
+  width: 30vw;
   max-height: 20em;
   border: 1px solid gray;
+}
+
+.this-is-parent-live-chat {
+	position: sticky;
+    z-index: 999999;
+    right: unset;
+    bottom: unset;
 }
 
 .live-sub-chat {
@@ -14,6 +21,12 @@
     display: block;
     position: relative;
     max-height: 5em;
+	margin-bottom: 1em;
+}
+
+.live-sub-chat p {
+    font-size: 14px;
+    font-family: "Arial";
 }
 
 .livechat-sub .live-sub-mess, .live-sub-chat {

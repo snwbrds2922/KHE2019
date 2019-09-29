@@ -45,7 +45,7 @@ function connect(host) {
 				});
 				clients = messData;
 				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
-				chrome.browser	Action.setBadgeText({text: String(clients)});
+				chrome.browserAction.setBadgeText({text: String(clients)});
 			break;
 			case 'MESSAGE':
 				// write the data to chat
