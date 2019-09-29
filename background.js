@@ -43,8 +43,10 @@ function connect(host) {
 				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
 				chrome.browserAction.setBadgeText({text: String(clients)});
 			break;
-			case 'MSG':
+			case 'MESSAGE':
 				// write the data to chat
+				// let message = event.data.split(':')[2]
+				// "[Client " + messData + "]" + message
 			break;
 		}
 
