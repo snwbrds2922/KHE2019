@@ -19,47 +19,53 @@ chrome.runtime.onConnect.addListener(function(port) {
   }
 });
 
-function createWebSocketConnection() {
+async function createWebSocketConnection() {
     if('WebSocket' in window){
-		connect('ws://157.245.135.82:8766');
+		try {
+			await connect('ws://157.245.135.82:8766');
+		} catch (error) {
+			console.log("[Error]: ", error)
+		}
     }
 }
 
 function connect(host) {
-    if (websocket === undefined) {
-        websocket = new WebSocket(host);
-    }
-
-    websocket.onopen = function() {
-		// in the beginning send the videoID to the server
-		websocket.send("CONNECT:" + v);
-    };
-
-    websocket.onmessage = function (event) {
-		let messType = event.data.split(':')[0];
-		let messData = event.data.split(':')[1];
-		switch (messType) {
-			case 'UPDATE':
-				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-					chrome.tabs.sendMessage(tabs[0].id, {update: clients});
-				});
-				clients = messData;
-				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
-				chrome.browserAction.setBadgeText({text: String(clients)});
-			break;
-			case 'MESSAGE':
-				// write the data to chat
-				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-					chrome.tabs.sendMessage(tabs[0].id, {message: "[Client " + messData + "]" + encodeURIComponent(event.data.split(':')[2])});
-				});
-			break;
+	return new Promise(function(resolve, reject) {
+		if (websocket === undefined) {
+			websocket = new WebSocket(host);
 		}
 
-    };
+		websocket.onopen = function() {
+			// in the beginning send the videoID to the server
+			websocket.send("CONNECT:" + v);
+		};
 
-    websocket.onclose = function() {
-        websocket = undefined;
-    };
+		websocket.onmessage = function (event) {
+			let messType = event.data.split(':')[0];
+			let messData = event.data.split(':')[1];
+			switch (messType) {
+				case 'UPDATE':
+					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+						chrome.tabs.sendMessage(tabs[0].id, {update: clients});
+					});
+					clients = messData;
+					chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
+					chrome.browserAction.setBadgeText({text: String(clients)});
+				break;
+				case 'MESSAGE':
+					// write the data to chat
+					chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+						chrome.tabs.sendMessage(tabs[0].id, {message: "[Client " + messData + "] " + encodeURIComponent(event.data.split(':')[2])});
+					});
+				break;
+			}
+
+		};
+
+		websocket.onclose = function() {
+			websocket = undefined;
+		};
+	});
 }
 
 function sendChatMessage(msg) {
