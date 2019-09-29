@@ -9,9 +9,11 @@ chrome.runtime.onConnect.addListener(function(port) {
   if (port.name == "videoID") {
 	port.onMessage.addListener(function(msg) {
 		if (msg.vid) {
-			port.postMessage({goit: msg.vid});
 			v = msg.vid;
 			createWebSocketConnection();
+		}
+		if (msg.msgval) {
+			sendChatMessage(String(msg.msgval).replace(":", ""));
 		}
 	});
   }
@@ -38,14 +40,18 @@ function connect(host) {
 		let messData = event.data.split(':')[1];
 		switch (messType) {
 			case 'UPDATE':
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+					chrome.tabs.sendMessage(tabs[0].id, {update: messData >= clients ? "joined" : "left"});
+				});
 				clients = messData;
 				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
 				chrome.browserAction.setBadgeText({text: String(clients)});
 			break;
 			case 'MESSAGE':
 				// write the data to chat
-				// let message = event.data.split(':')[2]
-				// "[Client " + messData + "]" + message
+				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+					chrome.tabs.sendMessage(tabs[0].id, {message: "[Client " + messData + "]" + event.data.split(':')[2]});
+				});
 			break;
 		}
 
@@ -54,6 +60,12 @@ function connect(host) {
     websocket.onclose = function() {
         websocket = undefined;
     };
+}
+
+function sendChatMessage(msg) {
+	if (websocket != null || websocket != undefined) {
+		websocket.send("MESSAGE:" + msg);
+	}
 }
 
 //Close the websocket connection

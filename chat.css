@@ -7,8 +7,13 @@
   border: 1px solid gray;
 }
 
-.live-sub-chat:empty {
-  display: none;
+.live-sub-chat {
+	background-color: azure;
+    padding: 1em;
+    overflow-y: scroll;
+    display: block;
+    position: relative;
+    max-height: 5em;
 }
 
 .livechat-sub .live-sub-mess, .live-sub-chat {

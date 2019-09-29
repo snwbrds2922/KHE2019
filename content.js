@@ -11,15 +11,25 @@ function finishNav() {
 		<div class="live-chat">
 		  <button class="live-chat-accord">Current Users 2</button>
 		  <div class="panel-live-chat">
-			<input class="live-sub-chat" type="text">
-			<form class="livechat-sub">
-			  <input class="live-sub-mess" type="text" placeholder="Message">
-			  <input class="live-sub-button" type="submit" value="Submit">
-			</form>
+			<div class="live-sub-chat"></div>
+			<div class="livechat-sub">
+			  <input class="live-sub-mess" type="text" placeholder="Message" value="">
+			  <button class="live-sub-button">Submit</button>
+			</div>
 		  </div>
 		</div>
 		`;
 		document.body.appendChild(chat);
+		
+		var port = chrome.runtime.connect({name: "videoID"});
+		
+		chat.querySelector('.live-sub-button').addEventListener('click', function () {
+			let msgVal = document.querySelector(".live-sub-mess").value;
+			if (msgVal) {
+				port.postMessage({msgval: msgVal});
+				document.querySelector(".live-sub-mess").value = "";
+			}
+		});
 		
 		chat.querySelector('.live-chat-accord').addEventListener('click', function () {
 			this.classList.toggle("active-live-chat");
@@ -27,14 +37,19 @@ function finishNav() {
 			panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
 		});
 		
-		var port = chrome.runtime.connect({name: "videoID"});
+
 		port.postMessage({vid: v});
-		port.onMessage.addListener(function(msg) {
-		  if (msg.goit == v) {
-			  alert(v);
-		  }
-		  
+		
+		chrome.runtime.onMessage.addListener(
+			function(request, sender, sendResponse) {
+				if (request.update) {
+					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + request.update + " the chat!</p>";
+				}
+				if (request.message) {
+					document.querySelector(".live-sub-chat").innerHTML += "<p>" + request.message + "</p>";
+				}
 		});
+
 	} else if(document.querySelector(".this-is-parent-live-chat")) {
 		document.querySelector(".this-is-parent-live-chat").remove();
 	}
