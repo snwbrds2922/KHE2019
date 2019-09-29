@@ -43,20 +43,19 @@ function finishNav() {
 			panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
 		});
 		
-
 		port.postMessage({vid: v});
 		
 		chrome.runtime.onMessage.addListener(
 			function(request, sender, sendResponse) {
-				var chatHistory = document.getElementsByClassName("live-sub-chat")[0];
-				chatHistory.scrollTop = chatHistory.scrollHeight;
-
 				if (request.update) {
 					let status = (parseInt(request.update) > parseInt(users)) ? "joined" : "left";
 					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + status + " the chat!</p>";
 				}
 				if (request.message) {
 					document.querySelector(".live-sub-chat").innerHTML += "<p>" + request.message + "</p>";
+				}
+				if (request) {
+					document.querySelector('.live-sub-chat').scrollTo(0, this.scrollHeight);
 				}
 		});
 
