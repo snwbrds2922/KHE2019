@@ -76,7 +76,7 @@ async def receive(websocket, path):
     await receive(websocket, path)
 
 # For Server
- start_server = websockets.serve(receive, "157.245.135.82", 8766)
+start_server = websockets.serve(receive, "157.245.135.82", 8766)
 # For local
 #start_server = websockets.serve(receive, "localhost", 8766)
 
