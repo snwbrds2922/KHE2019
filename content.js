@@ -6,6 +6,7 @@ function finishNav() {
     const v = params.get('v');
 	if (v) {
 		const chat = document.createElement('div');
+		chat.setAttribute('class', 'this-is-parent-live-chat');
 		chat.innerHTML = `
 		<div class="live-chat">
 		  <button class="live-chat-accord">Current Users 2</button>
@@ -20,13 +21,22 @@ function finishNav() {
 		`;
 		document.body.appendChild(chat);
 		
+		chat.querySelector('.live-chat-accord').addEventListener('click', function () {
+			this.classList.toggle("active-live-chat");
+			const panel = this.nextElementSibling;
+			panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+		});
+		
 		var port = chrome.runtime.connect({name: "videoID"});
 		port.postMessage({vid: v});
 		port.onMessage.addListener(function(msg) {
 		  if (msg.goit == v) {
 			  alert(v);
 		  }
+		  
 		});
+	} else if(document.querySelector(".this-is-parent-live-chat")) {
+		document.querySelector(".this-is-parent-live-chat").remove();
 	}
 }
 
