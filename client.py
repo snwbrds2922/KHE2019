@@ -15,14 +15,18 @@ def on_close(ws):
     print("### closed ###")
 
 def on_open(ws):
+    #ws.send("")
     ws.send("CONNECT:VID1234")
     ws.send("MESSAGE:hello world!")
-    ws.send("MESSAGE")
+    ws.send("MESdfSAGE")
 
 
 if __name__ == "__main__":
     #websocket.enableTrace(True)
-    ws = websocket.WebSocketApp("ws://157.245.135.82:8766",
+    # For SERVER
+    #ws = websocket.WebSocketApp("ws://157.245.135.82:8766",
+    # For local
+    ws = websocket.WebSocketApp("ws://localhost:8766",
                               on_message = on_message,
                               on_error = on_error,
                               on_close = on_close)
