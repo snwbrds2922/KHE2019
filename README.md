@@ -7,3 +7,5 @@ Have you ever wanted another way to watch YouTube in real time with anyone on th
 ## What it does
 
 Youtube Buddy allows you to chat with anyone synchronously on any YouTube video or to chat with your friends instead of counting down to try and match the exact moment everyone of your friends need to press play.
+
+Just add the extension to your Chrome browser with this link `coming soon` and you will be able to chat with anyone that also has our extension added and is watching that same video that you are.
