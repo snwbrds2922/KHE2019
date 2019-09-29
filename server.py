@@ -24,7 +24,7 @@ async def receive(websocket, path):
                     if n in videos[o]:
                         videos[o].remove(n)
                         for p in videos[o]:
-                            await users[p].send("UPDATE:" + str(len(videos)))
+                            await users[p].send("UPDATE:" + str(len(videos[o])))
                     if len((videos[o])) == 0:
                         videostoremove += {o}
 
@@ -56,7 +56,7 @@ async def receive(websocket, path):
         if uid not in videos[vid]:
             videos[vid].append(uid)
         for n in videos[vid]:
-            await users[n].send("UPDATE:" + str(len(users)))
+            await users[n].send("UPDATE:" + str(len(videos[vid])))
 
     elif message[0] == "MESSAGE":
         if len(message) < 2:
@@ -76,9 +76,9 @@ async def receive(websocket, path):
     await receive(websocket, path)
 
 # For Server
-start_server = websockets.serve(receive, "157.245.135.82", 8766)
-# For local
-#start_server = websockets.serve(receive, "localhost", 8766)
+#start_server = websockets.serve(receive, "157.245.135.82", 8766)
+#For local
+start_server = websockets.serve(receive, "localhost", 8766)
 
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
