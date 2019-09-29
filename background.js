@@ -3,7 +3,7 @@ let v;
 let clients = 0;
 
 chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
-chrome.browserAction.setBadgeText({text: clients});
+chrome.browserAction.setBadgeText({text: String(clients)});
 
 chrome.runtime.onConnect.addListener(function(port) {
   console.assert(port.name == "knockknock");
@@ -41,7 +41,7 @@ function connect(host) {
 			case 'UPDATE':
 				clients = messData;
 				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
-				chrome.browserAction.setBadgeText({text: clients});
+				chrome.browserAction.setBadgeText({text: String(clients)});
 			break;
 			case 'MSG':
 				// write the data to chat
