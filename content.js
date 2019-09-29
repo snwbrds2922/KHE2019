@@ -43,7 +43,6 @@ function finishNav() {
 			panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
 		});
 		
-
 		port.postMessage({vid: v});
 		
 		chrome.runtime.onMessage.addListener(
@@ -55,6 +54,10 @@ function finishNav() {
 				}
 				if (request.message) {
 					document.querySelector(".live-sub-chat").innerHTML += "<p>" + request.message + "</p>";
+				}
+				if (request) {
+					const chatContainer = document.querySelector('.live-sub-chat');
+					document.querySelector('.live-sub-chat').scrollTo(0, chatContainer.scrollHeight);
 				}
 		});
 
