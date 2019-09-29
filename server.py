@@ -34,7 +34,7 @@ async def receive(websocket, path):
                 break
         return
 
-    file.write("received message: " + message)
+    file.write("received message: " + message +'\n')
     if len(message) < 2:
         file.write("received empty message\n")
         await websocket.send("EMPTY RECEIVED")
@@ -45,7 +45,7 @@ async def receive(websocket, path):
         if len(message) < 2:
             print("NOVID")
             await websocket.send("NO VIDID RECEIVED")
-            file.write("RECEIVED CONNECT NO VID")
+            file.write("RECEIVED CONNECT NO VID\n")
             return
 
         uid = random.randint(1, 1000)
@@ -70,7 +70,7 @@ async def receive(websocket, path):
                     for o in videos[n]:
                         await users[o].send(str("MESSAGE:" + str(uid) + ':' + message[1]))
     else:
-        file.write("invalid")
+        file.write("invalid header\n")
         await websocket.send("INVALID HEADER")
 
     await receive(websocket, path)
