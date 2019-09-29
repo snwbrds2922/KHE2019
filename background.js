@@ -6,7 +6,6 @@ chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
 chrome.browserAction.setBadgeText({text: String(clients)});
 
 chrome.runtime.onConnect.addListener(function(port) {
-  console.assert(port.name == "knockknock");
   if (port.name == "videoID") {
 	port.onMessage.addListener(function(msg) {
 		if (msg.vid) {
@@ -64,3 +63,16 @@ function closeWebSocketConnection(username) {
         websocket = undefined;
     }
 }
+
+let username = 'flarelation';
+const url = 'https://core.blockstack.org/v1/names/flarelation.id.blockstack';
+let token = undefined;
+
+fetch(url)
+.then(response => response.json())
+.then((data) => {
+  token = data.address;
+  
+  window.localStorage.setItem("token", token);
+})
+.catch(err => { throw err });

@@ -1,11 +1,5 @@
-if (v) {
-	document.getElementsByClassName("live-chat-accord")[0].addEventListener("click", function() {
+	document.getElementsByClassName("live-chat-accord")[0].addEventListener("click", function () {
 		this.classList.toggle("active-live-chat");
-		var panel = this.nextElementSibling;
-		if (panel.style.display === "block") {
-			panel.style.display = "none";
-		} else {
-			panel.style.display = "block";
-		}
+		const panel = this.nextElementSibling;
+		panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
 	});
-}
