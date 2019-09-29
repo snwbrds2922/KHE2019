@@ -6,7 +6,6 @@ chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });
 chrome.browserAction.setBadgeText({text: String(clients)});
 
 chrome.runtime.onConnect.addListener(function(port) {
-  console.assert(port.name == "knockknock");
   if (port.name == "videoID") {
 	port.onMessage.addListener(function(msg) {
 		if (msg.vid) {
