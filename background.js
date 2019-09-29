@@ -41,7 +41,7 @@ function connect(host) {
 		switch (messType) {
 			case 'UPDATE':
 				chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-					chrome.tabs.sendMessage(tabs[0].id, {update: messData >= clients ? "joined" : "left"});
+					chrome.tabs.sendMessage(tabs[0].id, {update: clients});
 				});
 				clients = messData;
 				chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 255, 255] });

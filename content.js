@@ -9,7 +9,7 @@ function finishNav() {
 		chat.setAttribute('class', 'this-is-parent-live-chat');
 		chat.innerHTML = `
 		<div class="live-chat">
-		  <button class="live-chat-accord">Current Users 2</button>
+		  <button class="live-chat-accord">Chat page:</button>
 		  <div class="panel-live-chat">
 			<div class="live-sub-chat"></div>
 			<div class="livechat-sub">
@@ -21,7 +21,8 @@ function finishNav() {
 		`;
 		document.body.appendChild(chat);
 		
-		var port = chrome.runtime.connect({name: "videoID"});
+		let port = chrome.runtime.connect({name: "videoID"});
+		let users = 0;
 		
 		chat.querySelector('.live-sub-button').addEventListener('click', function () {
 			let msgVal = document.querySelector(".live-sub-mess").value;
@@ -30,7 +31,12 @@ function finishNav() {
 				document.querySelector(".live-sub-mess").value = "";
 			}
 		});
-		
+		chat.addEventListener("keyup", function(event) {
+		  if (event.keyCode === 13) {
+			event.preventDefault();
+			chat.querySelector('.live-sub-button').click();
+		  }
+		});
 		chat.querySelector('.live-chat-accord').addEventListener('click', function () {
 			this.classList.toggle("active-live-chat");
 			const panel = this.nextElementSibling;
@@ -43,7 +49,8 @@ function finishNav() {
 		chrome.runtime.onMessage.addListener(
 			function(request, sender, sendResponse) {
 				if (request.update) {
-					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + request.update + " the chat!</p>";
+					let status = (request.update >= users) ? "joined" : "left";
+					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + status + " the chat!</p>";
 				}
 				if (request.message) {
 					document.querySelector(".live-sub-chat").innerHTML += "<p>" + request.message + "</p>";
