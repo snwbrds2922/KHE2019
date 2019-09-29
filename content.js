@@ -48,6 +48,9 @@ function finishNav() {
 		
 		chrome.runtime.onMessage.addListener(
 			function(request, sender, sendResponse) {
+				var chatHistory = document.getElementsByClassName("live-sub-chat")[0];
+				chatHistory.scrollTop = chatHistory.scrollHeight;
+
 				if (request.update) {
 					let status = (parseInt(request.update) > parseInt(users)) ? "joined" : "left";
 					document.querySelector(".live-sub-chat").innerHTML += "<p>A user has " + status + " the chat!</p>";
