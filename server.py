@@ -61,6 +61,19 @@ async def receive(websocket, path):
             uid = random.random(1, 1000)
         users[uid] = websocket
         vid = message[1]
+        for n in users:
+            if n == websocket:
+                searchuid = n
+                for o in videos:
+                    for p in videos[o]:
+                        if p == searchuid:
+                            videos[o].pop(p)
+                            print("removed ", searchid)
+                            break
+                    if len((videos[o])) == 0:
+                        videos.pop(o)
+                        break
+        
         if uid not in videos[vid]:
             videos[vid].append(uid)
         for n in videos[vid]:
